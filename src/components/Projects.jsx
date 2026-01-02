@@ -1,94 +1,150 @@
 import { projects } from "../data";
-import { useScroll, useTransform, motion } from "framer-motion";
-import { useRef } from "react";
+import { useScroll, useTransform, motion, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 
 const Projects = () => {
-  const container = useRef(null);
+  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
+  const projectsStackRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [showNumber, setShowNumber] = useState(false);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [100, 0, 0, 0]);
+
+  // Track if projects section is in view
+  const { scrollYProgress: projectsProgress } = useScroll({
+    target: projectsStackRef,
+    offset: ["start end", "end start"],
+  });
+
+  useEffect(() => {
+    const unsubscribe = projectsProgress.on("change", (latest) => {
+      // Show number only when projects are actually in view
+      if (latest > 0.1 && latest < 0.9) {
+        setShowNumber(true);
+      } else {
+        setShowNumber(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [projectsProgress]);
 
   return (
-    <section
-      ref={container}
-      id="projects-section"
-      className="bg-black relative"
-      style={{ minHeight: `${projects.length * 100}vh` }}
-    >
-      {/* HEADER */}
-      <div className="px-6 md:px-16 lg:px-24 pt-20 pb-20">
-        <div className="max-w-[1600px] mx-auto">
-          <h1 className="text-white text-[3.2rem] md:text-[6.5rem] lg:text-[5rem] font-medium leading-[0.95] tracking-tight mb-16">
-            SELECTED WORKS
-          </h1>
+    <div ref={containerRef} className="relative min-h-[200vh]">
+      <motion.section
+        ref={sectionRef}
+        style={{ opacity, scale, y }}
+        id="projects-section"
+        className="sticky top-0 bg-black rounded-t-[35px] min-h-screen relative overflow-hidden"
+      >
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-neutral-400 rounded-full blur-3xl"></div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-10 max-w-[1400px]">
-            <span className="text-neutral-600 text-[0.8rem] tracking-wider pt-2" />
-            <p className="text-neutral-400 text-[1.15rem] md:text-[1.45rem] lg:text-[1.6rem] leading-[1.55] font-light max-w-[54ch]">
-              Thoughtfully crafted digital experiences that balance
-              functionality and aesthetics to create work that is refined,
-              memorable, and purposeful.
-            </p>
+        {/* HEADER */}
+        <div className="px-6 md:px-16 lg:px-24 pt-28 md:pt-20 lg:pt-25 pb-10 relative z-10">
+          <div className="max-w-[1600px] mx-auto">
+            <h1 className="text-white text-[3.2rem] md:text-[6.5rem] lg:text-[5rem] font-medium leading-[0.95] tracking-tight mb-16">
+              SELECTED WORKS
+            </h1>
+
+            <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-10 max-w-[1400px]">
+              <span className="text-neutral-600 text-[0.8rem] tracking-wider pt-2" />
+              <p className="text-neutral-400 text-[1.15rem] md:text-[1.45rem] lg:text-[1.6rem] leading-[1.55] font-light max-w-[54ch]">
+                Thoughtfully crafted digital experiences that balance
+                functionality and aesthetics to create work that is refined,
+                memorable, and purposeful.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.section>
 
-      {/* PROJECTS STACK */}
-      <div className="w-full pb-20">
-        {projects.map((project, index) => {
-          const targetScale = 1 - (projects.length - index) * 0.05;
+      {/* PROJECTS STACK - Outside motion section to preserve sticky behavior */}
+      <div 
+        ref={projectsStackRef}
+        className="bg-black relative w-full pb-20"
+        style={{ minHeight: `${projects.length * 100}vh` }}
+      >
+        {/* Fixed Left Number - Top Left Position */}
+        <AnimatePresence>
+          {showNumber && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed left-4 sm:left-6 md:left-8 lg:left-10 top-20 sm:top-24 md:top-28 lg:top-32 z-20 pointer-events-none"
+            >
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={activeIndex}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -50 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-light text-neutral-700/70 tracking-tighter leading-none block select-none"
+                >
+                  {String(projects[activeIndex].id).padStart(2, "0")}
+                </motion.span>
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-          return (
-            <ProjectItem
-              key={index}
-              project={project}
-              index={index}
-              targetScale={targetScale}
-              isLast={index === projects.length - 1}
-            />
-          );
-        })}
+        {projects.map((project, index) => (
+          <ProjectItem
+            key={index}
+            project={project}
+            index={index}
+            setActiveIndex={setActiveIndex}
+          />
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 
-const ProjectItem = ({ project, index, targetScale, isLast }) => {
+const ProjectItem = ({ project, index, setActiveIndex }) => {
   const container = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ["start start", "end start"],
+    offset: ["start center", "end center"],
   });
 
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.35],
-    isLast ? [1, 1] : [1, targetScale],
-    { clamp: true }
-  );
+  // Update active index when this project is in view
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      if (latest > 0.2 && latest < 0.8) {
+        setActiveIndex(index);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [scrollYProgress, index, setActiveIndex]);
 
   return (
     <div
       ref={container}
-      className="h-screen flex items-center justify-center sticky"
+      className="h-screen flex items-start justify-center sticky pt-16 sm:pt-20 md:pt-10"
       style={{ top: "0px" }}
     >
-      <motion.div
-        style={{
-          scale,
-          zIndex: index,
-        }}
-        className="relative w-full h-full max-h-screen origin-top bg-black flex items-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-10"
-      >
-        {/* Left Number */}
-        <div className="absolute left-4 sm:left-6 md:left-8 lg:left-12 xl:left-16 top-1/2 -translate-y-1/2 z-0 pointer-events-none">
-          <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[16rem] xl:text-[20rem] font-light text-neutral-800 tracking-tighter leading-none block select-none">
-            {String(project.id).padStart(2, "0")}
-          </span>
-        </div>
-
-        {/* Right Card */}
-        <div className="ml-auto w-full md:w-[75%] lg:w-[70%] xl:w-[65%] h-[80vh] max-h-[80vh] bg-neutral-900 rounded-xl md:rounded-2xl flex flex-col overflow-hidden relative z-10 shadow-2xl">
-          {/* Image/Video Container */}
-          <div className="w-full h-[45%] bg-black overflow-hidden relative flex-shrink-0">
+      <div className="relative w-full h-full origin-top bg-black flex items-start justify-center pl-[8rem] sm:pl-[10rem] md:pl-[12rem] lg:pl-[14rem] xl:pl-[16rem] pr-4 sm:pr-6 md:pr-8 lg:pr-10 xl:pr-12" style={{ zIndex: index }}>
+        {/* Fixed width and height card - NO SCALING */}
+        <div className="w-[90%] h-[90vh] bg-black rounded-xl md:rounded-2xl overflow-hidden relative z-10 shadow-2xl flex flex-col border-0">
+          {/* Full Screen Image/Video Container */}
+          <div className="w-full flex-1 bg-black overflow-hidden relative rounded-xl md:rounded-2xl">
             {project.type === "video" ? (
               <video
                 src={project.media}
@@ -96,31 +152,38 @@ const ProjectItem = ({ project, index, targetScale, isLast }) => {
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-xl md:rounded-2xl"
               />
             ) : (
               <img
                 src={project.media}
                 alt={project.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover rounded-xl md:rounded-2xl"
               />
             )}
+            
+            {/* Gradient overlay for text readability - smooth blend */}
+            <div className="absolute bottom-0 left-0 right-0 h-56 bg-gradient-to-t from-black via-black/95 to-transparent rounded-b-xl md:rounded-b-2xl"></div>
           </div>
 
-          {/* Content Container */}
-          <div className="p-4 sm:p-5 md:p-6 lg:p-8 bg-neutral-900 overflow-y-auto flex-1">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 lg:gap-8">
-              {/* Left Column */}
-              <div>
-                <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-white mb-3 md:mb-4 leading-tight">
+          {/* Details Section - Positioned at bottom */}
+          <div className="absolute bottom-0 left-0 right-0 bg-transparent p-6 sm:p-7 md:p-8 lg:p-10 xl:p-12 pt-24">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end max-w-[1600px] mx-auto">
+              {/* Left Column - Title and Description */}
+              <div className="space-y-4">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-white leading-tight">
                   {project.title}
                 </h2>
+                
+                <p className="text-neutral-300 text-sm md:text-base lg:text-lg leading-relaxed max-w-3xl">
+                  {project.description}
+                </p>
 
-                <div className="flex flex-wrap gap-2 mb-3 md:mb-4">
+                <div className="flex flex-wrap gap-2 pt-2">
                   {project.technologies.map((tech, i) => (
                     <span
                       key={i}
-                      className="px-2.5 py-1 border border-neutral-700 rounded-full text-neutral-400 text-xs md:text-sm whitespace-nowrap"
+                      className="px-3 py-1.5 bg-neutral-900/80 border border-neutral-700/50 rounded-full text-neutral-300 text-xs md:text-sm whitespace-nowrap backdrop-blur-sm"
                     >
                       {tech}
                     </span>
@@ -128,25 +191,20 @@ const ProjectItem = ({ project, index, targetScale, isLast }) => {
                 </div>
               </div>
 
-              {/* Right Column */}
-              <div className="flex flex-col justify-between gap-4">
-                <p className="text-neutral-400 text-sm md:text-base leading-relaxed">
-                  {project.description}
-                </p>
-                <a
-                  href="#"
-                  className="flex items-center gap-2 text-white hover:underline underline-offset-4 group w-fit text-sm md:text-base transition-all"
-                >
-                  Visit Website
-                  <span className="group-hover:translate-x-1 transition-transform inline-block">
-                    →
-                  </span>
-                </a>
-              </div>
+              {/* Right Column - CTA */}
+              <a
+                href="#"
+                className="flex items-center gap-3 text-white hover:text-neutral-300 transition-colors group text-sm md:text-base lg:text-lg font-light whitespace-nowrap"
+              >
+                Visit Website
+                <span className="group-hover:translate-x-1 transition-transform inline-block text-xl">
+                  →
+                </span>
+              </a>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };
