@@ -3,6 +3,7 @@ import Hero from "./components/Hero";
 import Experience from "./components/Experience";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
+import About from "./components/About";
 
 function App() {
   return (
@@ -11,6 +12,10 @@ function App() {
       <div className="relative z-50">
         <Navbar />
         <Hero />
+      </div>
+
+      <div id="about-section" className="relative z-45">
+        <About />
       </div>
 
       {/* EXPERIENCE SECTION */}
