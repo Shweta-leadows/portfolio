@@ -1,4 +1,5 @@
 import chromeVideo from "../src/assets/chrome-extension.mp4";
+import sampleCertificate from "../src/assets/your-photo.jpg";
 
 export const navLinks = [
   { id: 1, title: "Services", href: "#services" },
@@ -66,7 +67,6 @@ export const skills = [
   "UI/UX Design",
 ];
 
-// data.js
 export const projects = [
   {
     id: 1,
@@ -94,5 +94,28 @@ export const projects = [
     technologies: ["React", "GSAP", "Tailwind CSS"],
     media: chromeVideo,
     type: "video",
+  },
+];
+
+// Education Timeline Data - Only 12th and Graduation
+export const educationTimeline = [
+  {
+    id: 1,
+    year: "2020 - 2024",
+    type: "education",
+    title: "Bachelor of Engineering",
+    institution: "YCCE College",
+    description: "Completed graduation with focus on Computer Science and Engineering fundamentals.",
+    skills: ["DSA", "OOP", "DBMS", "Operating Systems"],
+  },
+  {
+    id: 2,
+    year: "2020",
+    type: "education",
+    title: "12th Grade",
+    institution: "Taiwade Jr College",
+    description: "Completed higher secondary education with coaching from ICAD School of Learning.",
+    achievement: "Qualified JEE Main & JEE Advanced",
+    skills: ["Physics", "Chemistry", "Mathematics"],
   },
 ];
