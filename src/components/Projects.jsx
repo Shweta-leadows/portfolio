@@ -76,27 +76,100 @@ const Projects = () => {
         className="bg-black relative w-full pb-20"
         style={{ minHeight: `${projects.length * 100}vh` }}
       >
-        {/* Fixed Left Number - Top Left Position */}
+        {/* Fixed Left Number - 3D Style with Fast Animation */}
         <AnimatePresence>
           {showNumber && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.2 }}
               className="fixed left-4 sm:left-6 md:left-8 lg:left-10 top-20 sm:top-24 md:top-28 lg:top-32 z-20 pointer-events-none"
             >
               <AnimatePresence mode="wait">
-                <motion.span
+                <motion.div
                   key={activeIndex}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -50 }}
-                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-light text-neutral-700/70 tracking-tighter leading-none block select-none"
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -30, scale: 0.95 }}
+                  transition={{ 
+                    duration: 0.25, 
+                    ease: [0.34, 1.56, 0.64, 1] // Bouncy easing
+                  }}
+                  className="relative select-none"
                 >
-                  {String(projects[activeIndex].id).padStart(2, "0")}
-                </motion.span>
+                  {/* 3D Number with Multiple Layers */}
+                  <div className="relative">
+                    {/* Shadow layers for 3D effect */}
+                    <span 
+                      className="absolute text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-bold tracking-tighter leading-none block"
+                      style={{
+                        color: '#0a0a0a',
+                        transform: 'translate(8px, 8px)',
+                        textShadow: '0 0 40px rgba(0,0,0,0.5)',
+                      }}
+                    >
+                      {String(projects[activeIndex].id).padStart(2, "0")}
+                    </span>
+                    
+                    <span 
+                      className="absolute text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-bold tracking-tighter leading-none block"
+                      style={{
+                        color: '#1a1a1a',
+                        transform: 'translate(6px, 6px)',
+                      }}
+                    >
+                      {String(projects[activeIndex].id).padStart(2, "0")}
+                    </span>
+                    
+                    <span 
+                      className="absolute text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-bold tracking-tighter leading-none block"
+                      style={{
+                        color: '#2a2a2a',
+                        transform: 'translate(4px, 4px)',
+                      }}
+                    >
+                      {String(projects[activeIndex].id).padStart(2, "0")}
+                    </span>
+                    
+                    <span 
+                      className="absolute text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-bold tracking-tighter leading-none block"
+                      style={{
+                        color: '#3a3a3a',
+                        transform: 'translate(2px, 2px)',
+                      }}
+                    >
+                      {String(projects[activeIndex].id).padStart(2, "0")}
+                    </span>
+
+                    {/* Main number with gradient */}
+                    <span 
+                      className="relative text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-bold tracking-tighter leading-none block"
+                      style={{
+                        background: 'linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        filter: 'drop-shadow(0 0 20px rgba(255,255,255,0.1))',
+                      }}
+                    >
+                      {String(projects[activeIndex].id).padStart(2, "0")}
+                    </span>
+
+                    {/* Highlight on top edge */}
+                    <span 
+                      className="absolute text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[13rem] font-bold tracking-tighter leading-none block opacity-30"
+                      style={{
+                        color: '#ffffff',
+                        transform: 'translate(-1px, -1px)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, white 0%, transparent 30%)',
+                        maskImage: 'linear-gradient(to bottom, white 0%, transparent 30%)',
+                      }}
+                    >
+                      {String(projects[activeIndex].id).padStart(2, "0")}
+                    </span>
+                  </div>
+                </motion.div>
               </AnimatePresence>
             </motion.div>
           )}

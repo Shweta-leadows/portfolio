@@ -12,7 +12,11 @@ const Skills = () => {
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 1]);
+  const scale = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [0.95, 1, 1, 1]
+  );
   const y = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [100, 0, 0, 0]);
 
   const isInView = useInView(contentRef, { once: false, amount: 0.2 });
@@ -22,18 +26,7 @@ const Skills = () => {
     categories: [
       {
         title: "Languages & Tools",
-        items: [
-          "Python",
-          "SQL",
-          "C++",
-          "Java",
-          "Typescript",
-          "JavaScript",
-          "Git",
-          "Postman",
-          "Docker",
-          "Firebase",
-        ],
+        items: ["Java", "Typescript", "JavaScript", "Git", "Postman", "Docker"],
       },
       {
         title: "Frameworks & Libraries",
@@ -41,9 +34,8 @@ const Skills = () => {
           "React",
           "Node.js",
           "Express.js",
-          "Flask",
+          "MUI",
           "Bootstrap",
-          "jQuery",
           "TailwindCSS",
           "Framer Motion",
           "GSAP",
@@ -181,7 +173,11 @@ const Skills = () => {
               <motion.div
                 initial={{ width: 0 }}
                 animate={isInView ? { width: "100%" } : { width: 0 }}
-                transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 1,
+                  delay: 0.5,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className="h-[2px] bg-gradient-to-r from-neutral-700 via-neutral-500 to-transparent mt-6 sm:mt-8 max-w-xs"
               ></motion.div>
             </div>
@@ -189,8 +185,12 @@ const Skills = () => {
             {/* RIGHT SIDE - SKILLS */}
             <div className="space-y-12 sm:space-y-14 md:space-y-16">
               {/* Skills Header */}
-              <motion.div variants={skillsHeaderVariants} className="mb-8 sm:mb-10 md:mb-12">
-                <h2 className="
+              <motion.div
+                variants={skillsHeaderVariants}
+                className="mb-8 sm:mb-10 md:mb-12"
+              >
+                <h2
+                  className="
                   text-[#e8e3da]
                   text-center
                   text-[2.5rem]
@@ -201,7 +201,8 @@ const Skills = () => {
                   font-medium
                   leading-[0.9]
                   tracking-tight
-                ">
+                "
+                >
                   Skills
                 </h2>
               </motion.div>
@@ -215,7 +216,8 @@ const Skills = () => {
                     className="space-y-5 sm:space-y-6"
                   >
                     {/* Category Title */}
-                    <h3 className="
+                    <h3
+                      className="
                       text-[#e8e3da]
                       text-[1.2rem]
                       sm:text-[1.35rem]
@@ -229,7 +231,8 @@ const Skills = () => {
                       md:mb-8
                       relative
                       pb-3
-                    ">
+                    "
+                    >
                       {category.title}
                       <span className="absolute bottom-0 left-0 w-12 h-[2px] bg-neutral-600"></span>
                     </h3>
@@ -244,7 +247,8 @@ const Skills = () => {
                           className="group/item relative pl-4"
                         >
                           {/* Hover indicator */}
-                          <span className="
+                          <span
+                            className="
                             absolute
                             left-0
                             top-1/2
@@ -255,9 +259,11 @@ const Skills = () => {
                             group-hover/item:w-2
                             transition-all
                             duration-300
-                          "></span>
+                          "
+                          ></span>
 
-                          <span className="
+                          <span
+                            className="
                             text-neutral-300
                             text-[0.95rem]
                             sm:text-[1rem]
@@ -272,7 +278,8 @@ const Skills = () => {
                             group-hover/item:text-white
                             group-hover/item:translate-x-1
                             cursor-default
-                          ">
+                          "
+                          >
                             {item}
                           </span>
                         </motion.div>
@@ -283,14 +290,6 @@ const Skills = () => {
               </div>
             </div>
           </div>
-
-          {/* Bottom Decorative Element */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
-            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.8 }}
-            className="mt-16 sm:mt-20 md:mt-24 h-[1px] bg-gradient-to-r from-transparent via-neutral-700/50 to-transparent origin-center"
-          ></motion.div>
         </motion.div>
       </motion.section>
     </div>

@@ -6,6 +6,7 @@ import Projects from "./components/Projects";
 import About from "./components/About";
 import Education from "./components/Education";
 import Certifications from "./components/Certifications";
+import Contact from "./components/Contact";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
       <div className="relative z-20">
         <Skills />
       </div>
+      <Contact />
     </div>
   );
 }
