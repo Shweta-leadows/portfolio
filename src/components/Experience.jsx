@@ -5,6 +5,7 @@ import { services } from "../data";
 const Experience = () => {
   const containerRef = useRef(null);
   const sectionRef = useRef(null);
+  const headerHoldRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -18,38 +19,41 @@ const Experience = () => {
   const ITEM_OFFSET = 150;
 
   return (
-    <div ref={containerRef} className="relative min-h-[200vh]">
-      <motion.section
-        ref={sectionRef}
-        style={{ opacity, scale, y }}
-        id="experience-section"
-        className="sticky top-0 bg-black rounded-t-[35px] min-h-screen relative overflow-hidden"
-      >
-        {/* Decorative background elements */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-neutral-400 rounded-full blur-3xl"></div>
-        </div>
+    <div ref={containerRef} className="relative">
+      {/* HEADER SECTION WITH STOPPING */}
+      <div ref={headerHoldRef} className="relative h-[200vh]">
+        <motion.section
+          ref={sectionRef}
+          style={{ opacity, scale, y }}
+          id="experience-section"
+          className="sticky top-0 bg-black rounded-t-[35px] h-screen relative overflow-hidden"
+        >
+          {/* Decorative background elements */}
+          <div className="absolute inset-0 opacity-5 pointer-events-none">
+            <div className="absolute top-20 left-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-white rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 right-10 w-72 sm:w-80 md:w-96 h-72 sm:h-80 md:h-96 bg-neutral-400 rounded-full blur-3xl"></div>
+          </div>
 
-        {/* HERO */}
-        <div className="px-6 md:px-16 lg:px-24 pt-28 md:pt-20 lg:pt-25 pb-10 relative z-10">
-          <div className="w-full max-w-[1600px] mx-auto">
-            <h1 className="text-white text-[3.2rem] md:text-[6.5rem] lg:text-[5rem] font-medium leading-[0.95] tracking-tight mb-16">
-              EXPERIENCE
-            </h1>
+          {/* HERO */}
+          <div className="px-6 md:px-16 lg:px-24 pt-28 md:pt-20 lg:pt-25 pb-10 relative z-10">
+            <div className="w-full max-w-[1600px] mx-auto">
+              <h1 className="text-white text-[3.2rem] md:text-[6.5rem] lg:text-[5rem] font-medium leading-[0.95] tracking-tight mb-16">
+                EXPERIENCE
+              </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-10 max-w-[1400px]">
-              <span className="text-neutral-600 text-[0.8rem] tracking-wider pt-2" />
-              <p className="text-neutral-400 text-[1.15rem] md:text-[1.45rem] lg:text-[1.6rem] leading-[1.55] font-light max-w-[54ch]">
-                With over 2 years of experience, I build and ship production-ready
-                web applications, working closely with modern frontend frameworks
-                and backend services. I emphasize clean architecture, performance
-                optimization, and creating intuitive user experiences.
-              </p>
+              <div className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-10 max-w-[1400px]">
+                <span className="text-neutral-600 text-[0.8rem] tracking-wider pt-2" />
+                <p className="text-neutral-400 text-[1.15rem] md:text-[1.45rem] lg:text-[1.6rem] leading-[1.55] font-light max-w-[54ch]">
+                  With over 2 years of experience, I build and ship production-ready
+                  web applications, working closely with modern frontend frameworks
+                  and backend services. I emphasize clean architecture, performance
+                  optimization, and creating intuitive user experiences.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section>
+      </div>
 
       {/* SERVICES STACK - Outside the motion section to preserve sticky behavior */}
       <div className="relative bg-black">
@@ -62,12 +66,8 @@ const Experience = () => {
           />
         ))}
 
-        {/* EXIT SPACE (FIXED — no blank screen) */}
-        <div
-          style={{
-            height: `${ITEM_OFFSET * (services.length - 1)}px`,
-          }}
-        />
+        {/* PUSH SPACE - This makes all items go up when scrolling past */}
+        <div className="h-screen bg-black" />
       </div>
     </div>
   );

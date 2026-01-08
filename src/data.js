@@ -1,5 +1,6 @@
 import chromeVideo from "../src/assets/chrome-extension.mp4";
 import sampleCertificate from "../src/assets/your-photo.jpg";
+import bannerImage from "../src/assets/banner-image.png";
 
 export const navLinks = [
   { id: 1, title: "Services", href: "#services" },
@@ -16,38 +17,29 @@ export const heroContent = {
   contactBtn: "CONTACT",
   experienceLabel: "CRAFTING WEB EXPERIENCES SINCE",
   experienceDate: "JUN'24",
-  image: "src/sample-image.avif",
+  image: bannerImage,
 };
-
 export const services = [
   {
-    title: "Software Engineer",
+    title: "Software Engineer — Leadows Technologies",
+    period: "June 2024 – Present",
     description:
-      "From frontend interactions to backend APIs, I build complete web solutions. I work with modern stacks to deliver apps that are scalable, maintainable, and ready for real-world users.",
+      "I currently work as a Software Engineer at Leadows Technologies, contributing to production-level applications used by organizations with complex, multi-level workflows. These systems manage processes where machines move through different stages — from initial intake, technician assignment, repair handling, to final resolution. My work focuses on building reliable workflows, implementing role-based access, and ensuring smooth data flow across all levels of the system.",
     technologies: [
       "React, Node.js, Express.js",
-      "REST APIs, Firebase, Docker",
-      "Git, GitHub, Postman",
+      "Multi-level workflow systems",
+      "Role-based access & REST APIs",
     ],
   },
   {
-    title: "UI/UX & Frontend",
+    title: "IFMS — Software Engineering Intern",
+    period: "2023 (6 Months Internship)",
     description:
-      "Design is more than looks — it's about clarity and connection. I design and develop clean, responsive interfaces that feel intuitive across devices. My focus is on clarity, accessibility, and seamless user experiences.",
+      "During my internship at IFMS, I worked on a Swiggy-like food delivery platform built using the MERN stack. I contributed to both frontend and backend development, including UI implementation, API integration, authentication flows, and core application logic. This experience helped me build a strong foundation in full-stack development and real-world application architecture.",
     technologies: [
-      "Next.js, TailwindCSS, GSAP",
-      "Figma to Code",
-      "HTML, CSS, JavaScript",
-    ],
-  },
-  {
-    title: "Performance Optimization",
-    description:
-      "Speed matters. I optimize web applications for faster load times, better SEO, and improved user experience through code splitting, lazy loading, and performance monitoring.",
-    technologies: [
-      "Lighthouse, Web Vitals",
-      "Code Splitting, Lazy Loading",
-      "CDN Integration, Caching",
+      "MongoDB, Express.js, React, Node.js",
+      "Full MERN stack development",
+      "API integration & authentication",
     ],
   },
 ];
@@ -167,5 +159,4 @@ export const certifications = [
     certificate: sampleCertificate,
     credentialId: "CERT-2024-REACT-004",
   },
- 
 ];
