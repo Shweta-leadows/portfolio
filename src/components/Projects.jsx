@@ -20,13 +20,9 @@ const Projects = () => {
     offset: ["start end", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 1]);
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [0.95, 1, 1, 1]
-  );
-  const y = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [100, 0, 0, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0, 1, 1, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [0.95, 1, 1, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.2, 0.7, 1], [100, 0, 0, 0]);
 
   // Track if projects section is in view
   const { scrollYProgress: projectsProgress } = useScroll({
@@ -54,7 +50,7 @@ const Projects = () => {
           ref={sectionRef}
           style={{ opacity, scale, y }}
           id="projects-section"
-          className="sticky top-0 bg-black rounded-t-[35px] h-screen relative overflow-hidden"
+          className="sticky top-0 bg-black rounded-t-[35px] min-h-screen relative overflow-hidden flex items-center"
         >
           {/* Monochromatic Decorative background elements */}
           <div className="absolute inset-0 opacity-[0.08] pointer-events-none">
@@ -95,8 +91,116 @@ const Projects = () => {
             }}
           />
 
-          {/* HEADER */}
-          <div className="px-6 md:px-16 lg:px-24 pt-28 md:pt-20 lg:pt-25 pb-10 relative z-10">
+          {/* HERO - Mobile Layout */}
+          <div className="w-full px-5 py-16 md:hidden relative z-10">
+            <div className="space-y-8">
+              {/* Tag */}
+              <motion.div
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/20 rounded-full"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <motion.span
+                  className="w-2 h-2 bg-white rounded-full"
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <span className="text-neutral-400 text-[0.65rem] tracking-wider font-medium uppercase">
+                  Featured Work
+                </span>
+              </motion.div>
+
+              {/* Title */}
+              <h1 className="text-white text-[3rem] font-black leading-[0.9] tracking-tighter">
+                SELECTED WORKS
+              </h1>
+
+              {/* Portfolio tag */}
+              <span className="text-neutral-500 text-[0.7rem] tracking-widest font-medium uppercase block">
+                Portfolio
+              </span>
+
+              {/* Description */}
+              <p className="text-neutral-400 text-[0.95rem] leading-[1.6] font-light">
+                Thoughtfully crafted digital experiences that balance functionality and aesthetics.
+              </p>
+
+              {/* Stats Grid - Mobile */}
+              <div className="grid grid-cols-3 gap-3 pt-2">
+                <motion.div
+                  className="px-3 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl text-center"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="text-white text-[1.5rem] font-black tracking-tight leading-none mb-1">
+                    {projects.length}
+                  </div>
+                  <div className="text-neutral-500 text-[0.6rem] font-semibold tracking-wider uppercase">
+                    Projects
+                  </div>
+                </motion.div>
+                <motion.div
+                  className="px-3 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl text-center"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="text-white text-[1.5rem] font-black tracking-tight leading-none mb-1">
+                    100%
+                  </div>
+                  <div className="text-neutral-500 text-[0.6rem] font-semibold tracking-wider uppercase">
+                    Custom
+                  </div>
+                </motion.div>
+                <motion.div
+                  className="px-3 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl text-center"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="text-white text-[1.5rem] font-black tracking-tight leading-none mb-1">
+                    Live
+                  </div>
+                  <div className="text-neutral-500 text-[0.6rem] font-semibold tracking-wider uppercase">
+                    Ready
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Categories - Mobile */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {["Web Apps", "E-Commerce", "Dashboards", "Landing Pages", "Full Stack"].map((category, i) => (
+                  <motion.div
+                    key={category}
+                    className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-neutral-300 text-[0.7rem] font-semibold"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + i * 0.05 }}
+                  >
+                    {category}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Scroll indicator - Mobile */}
+            <motion.div
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50"
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="text-white text-[0.65rem] tracking-[0.15em] font-light uppercase">
+                Scroll
+              </span>
+              <motion.div
+                className="w-[1px] h-12 bg-gradient-to-b from-white via-white/50 to-transparent"
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+          </div>
+
+          {/* HERO - Desktop Layout */}
+          <div className="hidden md:block w-full px-6 md:px-16 lg:px-24 pt-28 md:pt-20 lg:pt-25 pb-10 relative z-10">
             <div className="max-w-[1600px] mx-auto">
               {/* Small tag above title */}
               <motion.div
@@ -174,13 +278,7 @@ const Projects = () => {
 
                   {/* Categories - monochrome */}
                   <div className="flex flex-wrap gap-3">
-                    {[
-                      "Web Apps",
-                      "E-Commerce",
-                      "Dashboards",
-                      "Landing Pages",
-                      "Full Stack",
-                    ].map((category, i) => (
+                    {["Web Apps", "E-Commerce", "Dashboards", "Landing Pages", "Full Stack"].map((category, i) => (
                       <motion.div
                         key={category}
                         className="px-5 py-2.5 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-neutral-300 text-sm font-medium hover:bg-white/10 hover:text-white hover:border-white/20 transition-all duration-300"
@@ -196,67 +294,66 @@ const Projects = () => {
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Large decorative number */}
-          <motion.div
-            className="absolute bottom-20 right-6 md:right-16 lg:right-24 text-white/[0.03] text-[12rem] md:text-[16rem] lg:text-[20rem] font-black leading-none pointer-events-none select-none"
-            animate={{ opacity: [0.02, 0.04, 0.02] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          >
-            {projects.length}
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <span className="text-white text-xs tracking-[0.15em] font-light uppercase">
-              Scroll
-            </span>
+            {/* Large decorative number */}
             <motion.div
-              className="w-[1px] h-16 bg-gradient-to-b from-white via-white/50 to-transparent"
-              animate={{ opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
+              className="absolute bottom-20 right-6 md:right-16 lg:right-24 text-white/[0.03] text-[12rem] md:text-[16rem] lg:text-[20rem] font-black leading-none pointer-events-none select-none"
+              animate={{ opacity: [0.02, 0.04, 0.02] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              {projects.length}
+            </motion.div>
 
-          {/* Floating minimal shapes */}
-          <motion.div
-            className="absolute top-40 right-[12%] w-20 h-20 border border-white/10 rounded-lg backdrop-blur-sm"
-            animate={{
-              y: [0, -15, 0],
-              rotate: [0, 45, 0],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute bottom-40 left-[8%] w-16 h-16 border border-white/10 rounded-full backdrop-blur-sm"
-            animate={{
-              y: [0, 15, 0],
-              scale: [1, 1.1, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
+            {/* Scroll indicator */}
+            <motion.div
+              className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60"
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <span className="text-white text-xs tracking-[0.15em] font-light uppercase">
+                Scroll
+              </span>
+              <motion.div
+                className="w-[1px] h-16 bg-gradient-to-b from-white via-white/50 to-transparent"
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+
+            {/* Floating minimal shapes */}
+            <motion.div
+              className="absolute top-40 right-[12%] w-20 h-20 border border-white/10 rounded-lg backdrop-blur-sm"
+              animate={{
+                y: [0, -15, 0],
+                rotate: [0, 45, 0],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="absolute bottom-40 left-[8%] w-16 h-16 border border-white/10 rounded-full backdrop-blur-sm"
+              animate={{
+                y: [0, 15, 0],
+                scale: [1, 1.1, 1],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </div>
         </motion.section>
       </div>
 
       {/* PROJECTS STACK */}
       <div ref={projectsStackRef} className="bg-black relative w-full">
-        {/* Fixed Left Number - Clean 3D */}
-        {/* Fixed Left Number - MINIMAL CLEAN */}
+        {/* Fixed Left Number - Original desktop position */}
         <AnimatePresence>
           {showNumber && (
             <motion.div
@@ -264,7 +361,7 @@ const Projects = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed left-6 sm:left-8 md:left-12 lg:left-5 top-24 sm:top-28 md:top-2 z-[100] pointer-events-none"
+              className="hidden md:block fixed left-6 sm:left-8 md:left-12 lg:left-5 top-24 sm:top-28 md:top-2 z-[100] pointer-events-none"
             >
               <AnimatePresence mode="wait">
                 <motion.div
@@ -277,7 +374,6 @@ const Projects = () => {
                     ease: "easeOut",
                   }}
                 >
-                  {/* Minimal Clean Number */}
                   <div className="relative">
                     <span className="text-[6rem] sm:text-[8rem] md:text-[10rem] lg:text-[12rem] font-black tracking-tight leading-none text-white/60">
                       {String(projects[activeIndex].id).padStart(2, "0")}
@@ -298,7 +394,7 @@ const Projects = () => {
           />
         ))}
 
-        {/* STOPPING EFFECT AT END - Same as header */}
+        {/* STOPPING EFFECT AT END */}
         <div className="h-screen bg-black"></div>
       </div>
     </div>
@@ -313,10 +409,8 @@ const ProjectItem = ({ project, index, setActiveIndex }) => {
     offset: ["start center", "end center"],
   });
 
-  // Update active index immediately when project comes into view
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      // Trigger earlier for smoother response
       if (latest > 0.15 && latest < 0.85) {
         setActiveIndex(index);
       }
@@ -332,10 +426,10 @@ const ProjectItem = ({ project, index, setActiveIndex }) => {
       style={{ zIndex: index }}
     >
       <div className="h-screen bg-black flex items-center justify-center">
-        {/* Adjusted padding - more left space for number, less right */}
-        <div className="relative w-full h-full flex items-center justify-center pl-[10rem] sm:pl-[12rem] md:pl-[14rem] lg:pl-[16rem] xl:pl-[20rem] pr-4 sm:pr-6 md:pr-8 lg:pr-10 py-4 sm:py-6 md:py-8">
-          {/* Card - SAME SIZE FOR ALL */}
-          <div className="w-full h-[92vh] sm:h-[94vh] md:h-[95vh] max-w-[1600px] bg-black rounded-xl md:rounded-2xl overflow-hidden relative shadow-2xl flex flex-col">
+        {/* Responsive padding - minimal on mobile, original desktop layout */}
+        <div className="relative w-full h-full flex items-center justify-center px-4 md:pl-[10rem] md:pr-4 lg:pl-[16rem] xl:pl-[20rem] lg:pr-10 py-4 md:py-8">
+          {/* Card - Responsive */}
+          <div className="w-full h-[92vh] md:h-[94vh] lg:h-[95vh] max-w-[1600px] bg-black rounded-xl md:rounded-2xl overflow-hidden relative shadow-2xl flex flex-col">
             {/* Full Screen Image/Video Container */}
             <div className="w-full flex-1 bg-black overflow-hidden relative rounded-xl md:rounded-2xl">
               {project.type === "video" ? (
@@ -360,23 +454,23 @@ const ProjectItem = ({ project, index, setActiveIndex }) => {
             </div>
 
             {/* Details Section - Positioned at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 bg-transparent p-6 sm:p-8 md:p-10 lg:p-12 xl:p-14">
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 items-end max-w-[1400px] mx-auto">
+            <div className="absolute bottom-0 left-0 right-0 bg-transparent p-4 sm:p-6 md:p-10 lg:p-12 xl:p-14">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-4 md:gap-6 items-end max-w-[1400px] mx-auto">
                 {/* Left Column - Title and Description */}
-                <div className="space-y-3 md:space-y-4">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium text-white leading-tight">
+                <div className="space-y-2 md:space-y-3 lg:space-y-4">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-medium text-white leading-tight">
                     {project.title}
                   </h2>
 
-                  <p className="text-neutral-300 text-sm md:text-base lg:text-lg xl:text-xl leading-relaxed max-w-3xl">
+                  <p className="text-neutral-300 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl leading-relaxed max-w-3xl line-clamp-2 md:line-clamp-none">
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex flex-wrap gap-1.5 md:gap-2 pt-1 md:pt-2">
                     {project.technologies.map((tech, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1.5 md:px-4 md:py-2 bg-neutral-900/80 border border-neutral-700/50 rounded-full text-neutral-300 text-xs md:text-sm lg:text-base whitespace-nowrap backdrop-blur-sm"
+                        className="px-2 py-1 sm:px-2.5 sm:py-1.5 md:px-3 md:py-1.5 lg:px-4 lg:py-2 bg-neutral-900/80 border border-neutral-700/50 rounded-full text-neutral-300 text-[0.65rem] sm:text-xs md:text-sm lg:text-base whitespace-nowrap backdrop-blur-sm"
                       >
                         {tech}
                       </span>
@@ -387,10 +481,10 @@ const ProjectItem = ({ project, index, setActiveIndex }) => {
                 {/* Right Column - CTA */}
                 <a
                   href="#"
-                  className="flex items-center gap-3 text-white hover:text-neutral-300 transition-colors group text-sm md:text-base lg:text-lg xl:text-xl font-light whitespace-nowrap"
+                  className="flex items-center gap-2 md:gap-3 text-white hover:text-neutral-300 transition-colors group text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-light whitespace-nowrap justify-center md:justify-start"
                 >
                   Visit Website
-                  <span className="group-hover:translate-x-1 transition-transform inline-block text-xl md:text-2xl">
+                  <span className="group-hover:translate-x-1 transition-transform inline-block text-base sm:text-lg md:text-xl lg:text-2xl">
                     →
                   </span>
                 </a>
