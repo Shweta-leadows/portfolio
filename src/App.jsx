@@ -27,9 +27,9 @@ function App() {
       </div>
       <Certifications />
       {/* EDUCATION SECTION */}
-      <div id="education-section" className="relative z-43">
+      {/* <div id="education-section" className="relative z-43">
         <Education />
-      </div>
+      </div> */}
 
       {/* PROJECTS SECTION */}
       <div id="projects-section" className="relative z-30">
