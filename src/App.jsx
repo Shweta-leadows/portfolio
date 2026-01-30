@@ -20,12 +20,14 @@ function App() {
       <div id="about-section" className="relative z-45">
         <About />
       </div>
-
+      {/* SKILLS SECTION */}
+      <div className="relative z-20">
+        <Skills />
+      </div>
       {/* EXPERIENCE SECTION */}
       <div id="experience-section" className="relative z-40">
         <Experience />
       </div>
-      <Certifications />
       {/* EDUCATION SECTION */}
       {/* <div id="education-section" className="relative z-43">
         <Education />
@@ -35,11 +37,8 @@ function App() {
       <div id="projects-section" className="relative z-30">
         <Projects />
       </div>
+      <Certifications />
 
-      {/* SKILLS SECTION */}
-      <div className="relative z-20">
-        <Skills />
-      </div>
       <Contact />
     </div>
   );
